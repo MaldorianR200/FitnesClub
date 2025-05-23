@@ -4,14 +4,14 @@
 <div class="form-wrapper">
   <form (ngSubmit)="savePayment()" #paymentForm="ngForm">
     <label>
-      Посещение:
+      Клиент:
       <select [(ngModel)]="payment.visit_id" name="visit_id" required #visit_id="ngModel">
-        <option value="" disabled selected>-- Выберите посещение --</option>
+        <option value="" disabled selected>-- Выберите клиента --</option>
         <option *ngFor="let visit of visits" [value]="visit.id">
           ID {{ visit.id }} — {{ getClientName(visit.client_id) }}
         </option>
       </select>
-      <span class="error" *ngIf="visit_id.invalid && visit_id.touched">Выберите посещение</span>
+      <span class="error" *ngIf="visit_id.invalid && visit_id.touched">Выберите клиента</span>
     </label>
 
     <label>
@@ -52,7 +52,7 @@
 <table>
   <thead>
     <tr>
-      <th>Посещения</th>
+      <th>Дата операции</th>
       <th>Услуги</th>
       <th>Количество</th>
       <th>Финальная цена</th>
@@ -66,7 +66,7 @@
       <td>{{ getServiceTitle(payment.service_id) }}</td>
       <td>{{ payment.quantity }}</td>
       <td>{{ payment.final_price }}</td>
-      <td>{{ payment.discount }}</td>
+      <td>{{ payment.discount }}%</td>
       <td>
         <button (click)="editPayment(payment)">Редактировать</button>
         <button (click)="deletePayment(payment)">Удалить</button>

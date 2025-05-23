@@ -109,19 +109,6 @@ export class PaymentsComponent implements OnInit {
 
   this.payment.final_price = parseFloat(discountedPrice.toFixed(2));
 }
-
-  // savePayment(): void {
-  //   if (this.editingPayment) {
-  //     console.log(this.payment);
-  //     this.paymentService.updatePayment(this.payment).subscribe(() => {
-  //       this.loadPayments();
-  //       this.resetForm();
-  //     });
-  //   } else {
-  //     this.paymentService.addPayment(this.payment as Omit<Payment, 'id'>)
-  //       .subscribe(() => this.loadPayments());
-  //   }
-  // }
   savePayment(): void {
   if (!this.payment.visit_id || !this.payment.service_id) {
     alert('Выберите посещение и услугу перед добавлением.');
