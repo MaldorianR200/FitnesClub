@@ -1,0 +1,40 @@
+<nav class="nav">
+  <a class="logo" routerLink="home" routerLinkActive="active">
+    <img src="../../shared/assets/img/logo.svg" alt="logo">
+  </a>
+
+
+  <ul>
+    <li *ngIf="authService.hasRole(Role.ADMIN)">
+      <a routerLink="admins" routerLinkActive="active">Админы</a>
+    </li>
+    <li *ngIf="authService.hasRole(Role.ADMIN) || authService.hasRole(Role.MANAGER)">
+      <a routerLink="clients" routerLinkActive="active">Клиенты</a>
+    </li>
+    <li *ngIf="authService.hasRole(Role.ADMIN) || authService.hasRole(Role.MANAGER)">
+      <a routerLink="trainers" routerLinkActive="active">Тренеры</a>
+    </li>
+    <li *ngIf="authService.hasRole(Role.ADMIN) || authService.hasRole(Role.MANAGER) || authService.hasRole(Role.TRAINER)">
+      <a routerLink="services" routerLinkActive="active">Услуги</a>
+    </li>
+    <li *ngIf="authService.hasRole(Role.ADMIN)">
+      <a routerLink="managers" routerLinkActive="active">Менеджеры</a>
+    </li>
+    <li *ngIf="authService.hasRole(Role.ADMIN) || authService.hasRole(Role.MANAGER) || authService.hasRole(Role.TRAINER)">
+      <a routerLink="visits" routerLinkActive="active">Посещения</a>
+    </li>
+    <li *ngIf="authService.hasRole(Role.ADMIN) || authService.hasRole(Role.MANAGER)">
+      <a routerLink="payments" routerLinkActive="active">Оплата</a>
+    </li>
+
+    <li class="logout" *ngIf="authService.isAuthenticated()">
+      <div class="user-info">
+        <span class="user-name">{{ authService.getUserName() }}</span>
+        <span class="user-role">{{ authService.getUserRole() }}</span>
+      </div>
+      <p class="exit" (click)="logout()">Выйти</p>
+    </li>
+  </ul>
+</nav>
+
+<router-outlet></router-outlet>

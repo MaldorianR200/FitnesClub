@@ -1,0 +1,76 @@
+<h2>{{ editingClient ? 'Редактировать клиента' : 'Добавить клиента' }}</h2>
+
+
+<div class="form-wrapper">
+  <form (ngSubmit)="saveClient()" #f="ngForm">
+    <label>
+      ФИО:
+      <input [(ngModel)]="form.username" name="username" required #username="ngModel" />
+      <span class="error" *ngIf="username.invalid && username.touched">Обязательное поле</span>
+    </label>
+
+    <label>
+      Email:
+      <input [(ngModel)]="form.email" name="email" required email #email="ngModel" />
+      <span class="error" *ngIf="email.invalid && email.touched">
+        {{ email.errors?.['required'] ? 'Обязательное поле' : 'Неверный email' }}
+      </span>
+    </label>
+
+    <label>
+      Дата рождения:
+      <input [(ngModel)]="form.birth_date" name="birth_date" type="date" required #birth_date="ngModel" />
+      <span class="error" *ngIf="birth_date.invalid && birth_date.touched">Обязательное поле</span>
+    </label>
+
+    <label>
+      Адрес:
+      <input [(ngModel)]="form.address" name="address" required #address="ngModel" />
+      <span class="error" *ngIf="address.invalid && address.touched">Обязательное поле</span>
+    </label>
+
+    <label>
+      Телефон:
+      <input [(ngModel)]="form.phone" name="phone" required  pattern="^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$" #phone="ngModel" />
+      <span class="error" *ngIf="phone.invalid && phone.touched">
+        {{ phone.errors?.['required'] ? 'Обязательное поле' : 'Неверный формат телефона' }}
+      </span>
+    </label>
+
+    <button type="submit" [disabled]="f.invalid">
+      {{ editingClient ? 'Обновить' : 'Добавить' }}
+    </button>
+    <button type="button" (click)="resetForm()" *ngIf="editingClient">Отмена</button>
+  </form>
+</div>
+
+
+
+<hr />
+
+<h2>Список клиентов</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Имя</th>
+      <th>Email</th>
+      <th>Дата рождения</th>
+      <th>Адрес</th>
+      <th>Телефон</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let client of clients">
+      <td>{{ client.username }}</td>
+      <td>{{ client.email }}</td>
+      <td>{{ client.birth_date }}</td>
+      <td>{{ client.address }}</td>
+      <td>{{ client.phone }}</td>
+      <td>
+        <button (click)="editClient(client)">Редактировать</button>
+        <button (click)="deleteClient(client.id)">Удалить</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

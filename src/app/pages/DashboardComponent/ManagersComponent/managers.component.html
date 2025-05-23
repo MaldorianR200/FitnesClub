@@ -1,0 +1,76 @@
+<h2>{{ editingManagers ? 'Форма редактирования' : 'Форма для добавления' }}</h2>
+
+<div class="form-wrapper">
+  <form (ngSubmit)="saveManager()" #f="ngForm">
+  <label>
+    Имя:
+    <input [(ngModel)]="form.username" name="name" required #name="ngModel" />
+    <div class="error" *ngIf="name.invalid && name.touched">Имя обязательно</div>
+  </label>
+
+  <label>
+    Email:
+    <input [(ngModel)]="form.email" name="email" required email #email="ngModel" />
+    <div class="error" *ngIf="email.invalid && email.touched">
+      <span *ngIf="email.errors?.['required']">Email обязателен</span>
+      <span *ngIf="email.errors?.['email']">Неверный формат email</span>
+    </div>
+  </label>
+
+  <label>
+  Пароль:
+  <input type="password" [(ngModel)]="form.password" name="password" required minlength="6" #password="ngModel" />
+  <div class="error" *ngIf="password.invalid && password.touched">
+    <span *ngIf="password.errors?.['required']">Пароль обязателен</span>
+    <span *ngIf="password.errors?.['minlength']">Минимум 6 символов</span>
+  </div>
+</label>
+
+  <label>
+      Телефон:
+      <input [(ngModel)]="form.phone" name="phone" required  pattern="^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$" #phone="ngModel" />
+      <span class="error" *ngIf="phone.invalid && phone.touched">
+        {{ phone.errors?.['required'] ? 'Обязательное поле' : 'Неверный формат телефона' }}
+      </span>
+    </label>
+
+  <label>
+    Должность:
+    <input [(ngModel)]="form.position" name="position" required #position="ngModel" />
+    <div class="error" *ngIf="position.invalid && position.touched">Должность обязательна</div>
+  </label>
+
+  <button type="submit" [disabled]="f.invalid">
+    {{ editingManagers ? 'Обновить' : 'Добавить' }}
+  </button>
+  <button type="button" (click)="resetForm()" *ngIf="editingManagers">Отмена</button>
+</form>
+</div>
+
+
+<hr />
+
+<h2>Список клиентов</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Имя</th>
+      <th>Email</th>
+      <th>Телефон</th>
+      <th>Должность</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let manager of managers">
+      <td>{{ manager.username }}</td>
+      <td>{{ manager.email }}</td>
+      <td>{{ manager.phone }}</td>
+      <td>{{ manager.position }}</td>
+      <td>
+        <button (click)="editManager(manager)">Редактировать</button>
+        <button (click)="deleteManager(manager.id)">Удалить</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

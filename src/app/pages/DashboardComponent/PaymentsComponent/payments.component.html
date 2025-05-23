@@ -1,0 +1,76 @@
+<h2>{{ editingPayment ? 'Редактирование посещения' : 'Добавление посещения' }}</h2>
+
+
+<div class="form-wrapper">
+  <form (ngSubmit)="savePayment()" #paymentForm="ngForm">
+    <label>
+      Посещение:
+      <select [(ngModel)]="payment.visit_id" name="visit_id" required #visit_id="ngModel">
+        <option value="" disabled selected>-- Выберите посещение --</option>
+        <option *ngFor="let visit of visits" [value]="visit.id">
+          ID {{ visit.id }} — {{ getClientName(visit.client_id) }}
+        </option>
+      </select>
+      <span class="error" *ngIf="visit_id.invalid && visit_id.touched">Выберите посещение</span>
+    </label>
+
+    <label>
+      Услуга:
+      <select [(ngModel)]="payment.service_id" name="service_id" required #service_id="ngModel" (ngModelChange)="updateFinalPrice()">
+        <option value="" disabled selected>-- Выберите услугу --</option>
+        <option *ngFor="let service of services" [value]="service.id">{{ service.title }}</option>
+      </select>
+      <span class="error" *ngIf="service_id.invalid && service_id.touched">Выберите услугу</span>
+    </label>
+
+    <label>
+      Кол-во:
+      <input type="number" [(ngModel)]="payment.quantity" name="quantity" required #quantity="ngModel" min="1" (ngModelChange)="updateFinalPrice()"/>
+      <span class="error" *ngIf="quantity.invalid && quantity.touched">Введите корректное количество</span>
+    </label>
+
+    <label>
+      Скидка:
+      <input type="number" [(ngModel)]="payment.discount" name="discount" min="0" max="100"  (ngModelChange)="updateFinalPrice()"/>
+    </label>
+
+    <label>
+      Финальная цена:
+      <input type="number" [(ngModel)]="payment.final_price" name="final_price" readonly />
+    </label>
+
+    <button type="submit" [disabled]="paymentForm.invalid">
+      {{ editingPayment ? 'Обновить оплату' : 'Добавить оплату' }}
+    </button>
+    <button type="button" (click)="resetForm()" *ngIf="editingPayment">Отмена</button>
+  </form>
+</div>
+
+<hr />
+
+<h2>Оплата</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Посещения</th>
+      <th>Услуги</th>
+      <th>Количество</th>
+      <th>Финальная цена</th>
+      <th>Скидка</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let payment of payments">
+      <td>{{ getVisitDate(payment.visit_id) }}</td>
+      <td>{{ getServiceTitle(payment.service_id) }}</td>
+      <td>{{ payment.quantity }}</td>
+      <td>{{ payment.final_price }}</td>
+      <td>{{ payment.discount }}</td>
+      <td>
+        <button (click)="editPayment(payment)">Редактировать</button>
+        <button (click)="deletePayment(payment)">Удалить</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

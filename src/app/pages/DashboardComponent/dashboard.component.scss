@@ -1,0 +1,84 @@
+.nav {
+  background-color: #2ecc71; // Основной зелёный цвет
+  padding: 15px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .logo {
+    padding: 0 20px;
+
+    img {
+    width: 100px;
+    height: auto;
+    display: block;
+    }
+  }
+
+
+
+  ul {
+    display: flex;
+    align-content: flex-end;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 30px;
+  }
+
+  li {
+    position: relative;
+
+    a, &.logout {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s, transform 0.2s;
+      cursor: pointer;
+      display: inline-block;
+
+      &:hover {
+        background-color: #27ae60;
+        transform: translateY(-2px);
+      }
+
+      &.active {
+        background-color: #219150;
+      }
+    }
+
+    .user-info {
+    display: flex;
+    // align-items: center;
+    flex-direction: column;
+    margin-right: 2rem;
+    font-size: 0.9rem;
+    color: #333;
+
+    .user-name {
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+
+    .user-role {
+      font-style: italic;
+      color: #666;
+    }
+  }
+  }
+
+  .logout {
+    background-color: #e74c3c;
+    color: #fff;
+
+    &:hover {
+      background-color: #c0392b;
+    }
+  }
+}

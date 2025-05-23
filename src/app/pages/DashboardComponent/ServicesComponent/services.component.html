@@ -1,0 +1,67 @@
+
+<h2>{{ editingService ? 'Редактирование услуги' : 'Добавление услуги' }}</h2>
+
+<div class="form-wrapper">
+  <form (ngSubmit)="saveService()" #f="ngForm">
+    <label>
+      Название услуги:
+      <input [(ngModel)]="form.title" name="name" required #title="ngModel" />
+      <span class="error" *ngIf="title.invalid && title.touched">Обязательное поле</span>
+    </label>
+
+    <label>
+      Описание:
+      <textarea [(ngModel)]="form.description" name="description" required #description="ngModel"></textarea>
+      <span class="error" *ngIf="description.invalid && description.touched">Обязательное поле</span>
+    </label>
+
+    <label>
+      Цена:
+      <input [(ngModel)]="form.price" name="price" required pattern="^[0-9]+(\.[0-9]{1,2})?$" #price="ngModel" />
+      <span class="error" *ngIf="price.invalid && price.touched">Введите корректную цену</span>
+    </label>
+
+    <label>
+      Тренер:
+      <select [(ngModel)]="form.trainer_id" name="trainerId" required #trainer_id="ngModel">
+        <option *ngFor="let trainer of trainers" [value]="trainer.id">
+          {{ trainer.username }}
+        </option>
+      </select>
+      <span class="error" *ngIf="trainer_id.invalid && trainer_id.touched">Выберите тренера</span>
+    </label>
+
+    <button type="submit" [disabled]="f.invalid">
+      {{ editingService ? 'Обновить' : 'Добавить' }}
+    </button>
+    <button type="button" (click)="resetForm()" *ngIf="editingService">Отмена</button>
+  </form>
+</div>
+
+
+<hr />
+
+<h2>Список услуг</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th>Описание</th>
+      <th>Цена</th>
+      <th>Тренер</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let service of services">
+      <td>{{ service.title }}</td>
+      <td>{{ service.description }}</td>
+      <td>{{ service.price }}</td>
+      <td>{{ getTrainerName(service.trainer_id) }}</td>
+      <td>
+        <button (click)="editService(service)">Редактировать</button>
+        <button (click)="deleteService(service.id)">Удалить</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

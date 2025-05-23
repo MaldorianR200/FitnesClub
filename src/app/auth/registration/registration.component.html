@@ -1,0 +1,57 @@
+<div class="registration-container">
+  <!-- Полоска для успешной регистрации -->
+  <div *ngIf="successMessage" class="notification success">
+    {{ successMessage }}
+  </div>
+
+  <h2>Регистрация</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username">ФИО</label>
+      <input type="text" id="username" formControlName="username">
+      <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error">
+        Поле пустое
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Телефон</label>
+      <input type="text" id="phone" formControlName="phone">
+      <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="error">
+        Некорректный номер
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email">
+      <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error">
+        Введите корректный email
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Пароль</label>
+      <input type="password" id="password" formControlName="password">
+      <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error">
+        Пароль должен содержать минимум 6 символов
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="role">Роль</label>
+      <select id="role" formControlName="role">
+        <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+      </select>
+    </div>
+    <div *ngIf="errorMessage" class="error-message">{{errorMessage}}</div>
+
+    <button type="submit" [disabled]="loading || registerForm.invalid">
+      {{loading ? 'Регистрация...' : 'Зарегистрироваться'}}
+    </button>
+  </form>
+
+   <div class="login">
+    <a routerLink="/login" routerLinkActive="active">Уже зарегистрированы?</a>
+  </div>
+</div>
