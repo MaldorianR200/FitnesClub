@@ -5,13 +5,13 @@
   <form (ngSubmit)="saveClient()" #f="ngForm">
     <label>
       ФИО:
-      <input [(ngModel)]="form.username" name="username" required #username="ngModel" />
+      <input [(ngModel)]="form.username" name="username" required #username="ngModel"  [class.invalid]="username.invalid && username.touched"/>
       <span class="error" *ngIf="username.invalid && username.touched">Обязательное поле</span>
     </label>
 
     <label>
       Email:
-      <input [(ngModel)]="form.email" name="email" required email #email="ngModel" />
+      <input [(ngModel)]="form.email" name="email" required email #email="ngModel"  [class.invalid]="email.invalid && email.touched"/>
       <span class="error" *ngIf="email.invalid && email.touched">
         {{ email.errors?.['required'] ? 'Обязательное поле' : 'Неверный email' }}
       </span>
@@ -19,19 +19,19 @@
 
     <label>
       Дата рождения:
-      <input [(ngModel)]="form.birth_date" name="birth_date" type="date" required #birth_date="ngModel" />
+      <input [(ngModel)]="form.birth_date" name="birth_date" type="date" required #birth_date="ngModel" [class.invalid]="birth_date.invalid && birth_date.touched"/>
       <span class="error" *ngIf="birth_date.invalid && birth_date.touched">Обязательное поле</span>
     </label>
 
     <label>
       Адрес:
-      <input [(ngModel)]="form.address" name="address" required #address="ngModel" />
+      <input [(ngModel)]="form.address" name="address" required #address="ngModel" [class.invalid]="address.invalid && address.touched"/>
       <span class="error" *ngIf="address.invalid && address.touched">Обязательное поле</span>
     </label>
 
     <label>
       Телефон:
-      <input [(ngModel)]="form.phone" name="phone" required  pattern="^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$" #phone="ngModel" />
+      <input [(ngModel)]="form.phone" name="phone" required  pattern="^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$" #phone="ngModel" [class.invalid]="phone.invalid && phone.touched"/>
       <span class="error" *ngIf="phone.invalid && phone.touched">
         {{ phone.errors?.['required'] ? 'Обязательное поле' : 'Неверный формат телефона' }}
       </span>

@@ -5,25 +5,25 @@
   <form (ngSubmit)="saveService()" #f="ngForm">
     <label>
       Название услуги:
-      <input [(ngModel)]="form.title" name="name" required #title="ngModel" />
+      <input [(ngModel)]="form.title" name="name" required #title="ngModel"  [class.invalid]="title.invalid && title.touched"/>
       <span class="error" *ngIf="title.invalid && title.touched">Обязательное поле</span>
     </label>
 
     <label>
       Описание:
-      <textarea [(ngModel)]="form.description" name="description" required #description="ngModel"></textarea>
+      <textarea [(ngModel)]="form.description" name="description" required #description="ngModel"  [class.invalid]="description.invalid && description.touched"></textarea>
       <span class="error" *ngIf="description.invalid && description.touched">Обязательное поле</span>
     </label>
 
     <label>
       Цена:
-      <input [(ngModel)]="form.price" name="price" required pattern="^[0-9]+(\.[0-9]{1,2})?$" #price="ngModel" />
+      <input [(ngModel)]="form.price" name="price" required pattern="^[0-9]+(\.[0-9]{1,2})?$" #price="ngModel"  [class.invalid]="price.invalid && price.touched"/>
       <span class="error" *ngIf="price.invalid && price.touched">Введите корректную цену</span>
     </label>
 
     <label>
       Тренер:
-      <select [(ngModel)]="form.trainer_id" name="trainerId" required #trainer_id="ngModel">
+      <select [(ngModel)]="form.trainer_id" name="trainerId" required #trainer_id="ngModel"  [class.invalid]="trainer_id.invalid && trainer_id.touched">
         <option *ngFor="let trainer of trainers" [value]="trainer.id">
           {{ trainer.username }}
         </option>

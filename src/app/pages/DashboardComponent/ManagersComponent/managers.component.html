@@ -4,13 +4,13 @@
   <form (ngSubmit)="saveManager()" #f="ngForm">
   <label>
     Имя:
-    <input [(ngModel)]="form.username" name="name" required #name="ngModel" />
+    <input [(ngModel)]="form.username" name="name" required #name="ngModel" [class.invalid]="name.invalid && name.touched"/>
     <div class="error" *ngIf="name.invalid && name.touched">Имя обязательно</div>
   </label>
 
   <label>
     Email:
-    <input [(ngModel)]="form.email" name="email" required email #email="ngModel" />
+    <input [(ngModel)]="form.email" name="email" required email #email="ngModel" [class.invalid]="email.invalid && email.touched"/>
     <div class="error" *ngIf="email.invalid && email.touched">
       <span *ngIf="email.errors?.['required']">Email обязателен</span>
       <span *ngIf="email.errors?.['email']">Неверный формат email</span>
@@ -19,7 +19,7 @@
 
   <label>
   Пароль:
-  <input type="password" [(ngModel)]="form.password" name="password" required minlength="6" #password="ngModel" />
+  <input type="password" [(ngModel)]="form.password" name="password" required minlength="6" #password="ngModel" [class.invalid]="password.invalid && password.touched"/>
   <div class="error" *ngIf="password.invalid && password.touched">
     <span *ngIf="password.errors?.['required']">Пароль обязателен</span>
     <span *ngIf="password.errors?.['minlength']">Минимум 6 символов</span>
@@ -28,7 +28,7 @@
 
   <label>
       Телефон:
-      <input [(ngModel)]="form.phone" name="phone" required  pattern="^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$" #phone="ngModel" />
+      <input [(ngModel)]="form.phone" name="phone" required  pattern="^(\+7|8)[\s\-]?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{2}[\s\-]?\d{2}$" #phone="ngModel" [class.invalid]="phone.invalid && phone.touched"/>
       <span class="error" *ngIf="phone.invalid && phone.touched">
         {{ phone.errors?.['required'] ? 'Обязательное поле' : 'Неверный формат телефона' }}
       </span>
@@ -36,7 +36,7 @@
 
   <label>
     Должность:
-    <input [(ngModel)]="form.position" name="position" required #position="ngModel" />
+    <input [(ngModel)]="form.position" name="position" required #position="ngModel" [class.invalid]="position.invalid && position.touched"/>
     <div class="error" *ngIf="position.invalid && position.touched">Должность обязательна</div>
   </label>
 

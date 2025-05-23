@@ -4,28 +4,28 @@
   <form (ngSubmit)="saveVisit()" #visitForm="ngForm">
   <label>
     Клиент:
-    <select [(ngModel)]="form.client_id" name="client_id" required #clientId="ngModel">
+    <select [(ngModel)]="form.client_id" name="client_id" required #clientId="ngModel"  [class.invalid]="clientId.invalid && clientId.touched">
       <option *ngFor="let client of clients" [value]="client.id">{{ client.username }}</option>
     </select>
   </label>
 
   <label>
     Тренер:
-    <select [(ngModel)]="form.trainer_id" name="trainer_id" required #trainerId="ngModel">
+    <select [(ngModel)]="form.trainer_id" name="trainer_id" required #trainerId="ngModel"  [class.invalid]="trainerId.invalid && trainerId.touched">
       <option *ngFor="let trainer of trainers" [value]="trainer.id">{{ trainer.username }}</option>
     </select>
   </label>
 
   <label>
     Менеджер:
-    <select [(ngModel)]="form.manager_id" name="manager_id" required #managerId="ngModel">
+    <select [(ngModel)]="form.manager_id" name="manager_id" required #managerId="ngModel"  [class.invalid]="managerId.invalid && managerId.touched">
       <option *ngFor="let manager of managers" [value]="manager.id">{{ manager.username }}</option>
     </select>
   </label>
 
   <label>
     Дата посещения:
-    <input type="date" [(ngModel)]="form.visit_date" name="visit_date" required #visitDate="ngModel" />
+    <input type="date" [(ngModel)]="form.visit_date" name="visit_date" required #visitDate="ngModel"  [class.invalid]="visitDate.invalid && visitDate.touched"/>
   </label>
 
   <button type="submit" [disabled]="visitForm.invalid">

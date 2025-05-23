@@ -69,6 +69,10 @@ form {
   font-size: 14px;
   margin-top: 4px;
 }
+input.invalid {
+  border-color: red !important;
+  box-shadow: 0 0 3px red;
+}
 
 h2 {
   color: #2c3e50;

@@ -5,7 +5,7 @@
   <form (ngSubmit)="savePayment()" #paymentForm="ngForm">
     <label>
       Клиент:
-      <select [(ngModel)]="payment.visit_id" name="visit_id" required #visit_id="ngModel">
+      <select [(ngModel)]="payment.visit_id" name="visit_id" required #visit_id="ngModel" [class.invalid]="visit_id.invalid && visit_id.touched">
         <option value="" disabled selected>-- Выберите клиента --</option>
         <option *ngFor="let visit of visits" [value]="visit.id">
           ID {{ visit.id }} — {{ getClientName(visit.client_id) }}
@@ -16,7 +16,7 @@
 
     <label>
       Услуга:
-      <select [(ngModel)]="payment.service_id" name="service_id" required #service_id="ngModel" (ngModelChange)="updateFinalPrice()">
+      <select [(ngModel)]="payment.service_id" name="service_id" required #service_id="ngModel" (ngModelChange)="updateFinalPrice()"  [class.invalid]="service_id.invalid && service_id.touched">
         <option value="" disabled selected>-- Выберите услугу --</option>
         <option *ngFor="let service of services" [value]="service.id">{{ service.title }}</option>
       </select>
@@ -25,7 +25,7 @@
 
     <label>
       Кол-во:
-      <input type="number" [(ngModel)]="payment.quantity" name="quantity" required #quantity="ngModel" min="1" (ngModelChange)="updateFinalPrice()"/>
+      <input type="number" [(ngModel)]="payment.quantity" name="quantity" required #quantity="ngModel" min="1" (ngModelChange)="updateFinalPrice()"  [class.invalid]="quantity.invalid && quantity.touched"/>
       <span class="error" *ngIf="quantity.invalid && quantity.touched">Введите корректное количество</span>
     </label>
 
