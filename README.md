@@ -12,6 +12,8 @@ npm start
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
+
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
@@ -25,6 +27,15 @@ For a complete list of available schematics (such as `components`, `directives`,
 ```bash
 ng generate --help
 ```
+
+## Backend server
+To start the Node.js backend server (based on the Express framework), run the following command from the server directory:
+
+```bash
+npx ts-node index.ts
+```
+This will launch the backend server, typically available at http://localhost:3000/.
+Note: Make sure you have ts-node and TypeScript installed (either locally or globally).
 
 ## Building
 
