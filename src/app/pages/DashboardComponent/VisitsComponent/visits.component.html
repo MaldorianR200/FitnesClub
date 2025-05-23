@@ -31,34 +31,47 @@
   <button type="submit" [disabled]="visitForm.invalid">
     {{ editingVisit ? 'Обновить' : 'Добавить' }}
   </button>
-  <button type="button" (click)="resetForm()" *ngIf="editingVisit">Отмена</button>
+  <button type="button" (click)="resetForm(visitForm)" *ngIf="editingVisit">Отмена</button>
 </form>
 
 </div>
 
 <hr />
 
-<h2>Список посещений</h2>
-<table>
+
+<h2 style="display: flex; justify-content: center; align-items: center;">
+  <span class="title">Список посещений</span>
+  <button class="pdf-button" (click)="downloadPDF()">Скачать PDF</button>
+</h2>
+<!-- Поиск -->
+<div class="search-wrapper">
+  <label>
+    Поиск:
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Введите имя клиента, тренера или менеджера" />
+  </label>
+</div>
+
+<table id="visitsTable">
   <thead>
     <tr>
       <th>Клиент</th>
       <th>Тренер</th>
       <th>Менеджер</th>
       <th>Дата посещения</th>
-      <th>Действия</th>
+      <th class="no-print">Действия</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let visit of visits">
+   <tr *ngFor="let visit of filteredVisits()">
       <td>{{ getClientName(visit.client_id) }}</td>
       <td>{{ getTrainerName(visit.trainer_id) }}</td>
       <td>{{ getManagerName(visit.manager_id) }}</td>
       <td>{{ visit.visit_date }}</td>
-      <td>
+      <td class="no-print">
         <button (click)="editVisit(visit)">Редактировать</button>
         <button (click)="deleteVisit(visit.id)">Удалить</button>
       </td>
     </tr>
   </tbody>
 </table>
+

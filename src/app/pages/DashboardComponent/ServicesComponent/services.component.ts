@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ServiceService } from '../../../entities/service/model/api/service.service';
 import { Service } from '../../../entities/service/model/types/service';
 import { TrainerService } from '../../../entities/trainer/model/api/trainer.service';
@@ -18,6 +18,7 @@ export class ServicesComponent {
     trainers: Trainer[] = [];
     editingService: Service | null = null;
     form: Partial<Service> = {};
+    searchQuery: string = '';
 
     constructor(private serviceService: ServiceService, private trainerService: TrainerService) {
       this.loadServices();
@@ -56,6 +57,20 @@ export class ServicesComponent {
       this.form = { ...trainer };
     }
 
+    filteredService() {
+      const query = this.searchQuery.toLowerCase().trim();
+
+      if (!query) return this.services;
+
+      return this.services.filter(service => {
+        const serviceTitle = service.title.toLowerCase();
+        const trainerName = this.getTrainerName(service.trainer_id).toLowerCase();
+
+
+        return serviceTitle.includes(query) || trainerName.includes(query)
+      });
+    }
+
 
 
     deleteService(id: number) {
@@ -64,8 +79,12 @@ export class ServicesComponent {
       }
     }
 
-    resetForm() {
+    resetForm(form?: NgForm) {
       this.editingService = null;
       this.form = {};
+
+      if (form) {
+        form.resetForm();
+      }
     }
 }

@@ -4,6 +4,7 @@ import { Client } from '../../src/app/entities/client/model/types/client';
 
 const router = express.Router();
 
+// GET
 router.get('/', async (req, res) => {
   const db = await initializeDatabase();
   const clients = await db.all('SELECT * FROM clients');

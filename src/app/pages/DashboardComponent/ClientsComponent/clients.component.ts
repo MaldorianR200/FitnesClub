@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ClientService } from '../../../entities/client/model/api/client.service';
 import { Client } from '../../../entities/client/model/types/client';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-clients',
@@ -51,8 +51,12 @@ export class ClientsComponent {
     }
   }
 
-  resetForm() {
+  resetForm(form?: NgForm) {
     this.editingClient = null;
     this.form = {};
+
+    if (form) {
+      form.resetForm();
+    }
   }
 }

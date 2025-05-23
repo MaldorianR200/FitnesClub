@@ -37,7 +37,7 @@
       </span>
     </label>
 
-    <button type="submit" [disabled]="f.invalid">
+    <button type="submit" (click)="resetForm(f)" [disabled]="f.invalid">
       {{ editingClient ? 'Обновить' : 'Добавить' }}
     </button>
     <button type="button" (click)="resetForm()" *ngIf="editingClient">Отмена</button>

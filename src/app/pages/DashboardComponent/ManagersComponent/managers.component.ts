@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Manager } from '../../../entities/manager/model/types/manager';
 import { ManagerService } from '../../../entities/manager/model/api/manager.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-managers',
@@ -51,8 +51,12 @@ export class ManagersComponent {
       }
     }
 
-    resetForm() {
-      this.editingManagers = null;
-      this.form = {};
+    resetForm(form?: NgForm) {
+    this.editingManagers = null;
+    this.form = {};
+
+    if (form) {
+      form.resetForm();
     }
+  }
 }

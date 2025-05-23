@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Trainer } from '../../../entities/trainer/model/types/trainer';
 import { TrainerService } from '../../../entities/trainer/model/api/trainer.service';
 
@@ -51,8 +51,12 @@ export class TrainersComponent {
       }
     }
 
-    resetForm() {
+    resetForm(form?: NgForm) {
       this.editingTrainer = null;
       this.form = {};
+
+      if (form) {
+        form.resetForm();
+      }
     }
 }

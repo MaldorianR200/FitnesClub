@@ -6,7 +6,7 @@ import { ServiceService } from '../../../entities/service/model/api/service.serv
 import { PaymentService } from '../../../entities/payments/model/api/payment.service';
 import { Visit } from '../../../entities/visit/model/types/visit';
 import { Payment } from '../../../entities/payments/model/types/payment';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ClientService } from '../../../entities/client/model/api/client.service';
 import { Service } from '../../../entities/service/model/types/service';
 import { HttpClient } from '@angular/common/http';
@@ -157,7 +157,7 @@ export class PaymentsComponent implements OnInit {
 
 
 
-  resetForm(): void {
+  resetForm(form?: NgForm): void {
     this.payment = {
       visit_id: 0,
       service_id: 0,
@@ -166,7 +166,9 @@ export class PaymentsComponent implements OnInit {
       discount: 0.0,
     };
     this.editingPayment = false;
+    if (form) {
+      form.resetForm();
+    }
   }
-
 
 }

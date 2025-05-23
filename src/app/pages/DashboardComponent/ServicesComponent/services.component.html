@@ -42,6 +42,14 @@
 <hr />
 
 <h2>Список услуг</h2>
+<!-- Поиск -->
+<div class="search-wrapper">
+  <label>
+    Поиск:
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Название услуги или имя тренера" />
+  </label>
+</div>
+
 <table>
   <thead>
     <tr>
@@ -53,7 +61,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let service of services">
+    <tr *ngFor="let service of filteredService()">
       <td>{{ service.title }}</td>
       <td>{{ service.description }}</td>
       <td>{{ service.price }}</td>

@@ -15,7 +15,7 @@
       <input [(ngModel)]="form.phone" name="phone" required />
     </label>
     <button type="submit">{{ editingAdmin ? 'Обновить' : 'Добавить' }}</button>
-    <button type="button" (click)="resetForm()" *ngIf="editingAdmin">Отмена</button>
+    <button type="button" (click)="resetForm(f)" *ngIf="editingAdmin">Отмена</button>
   </form>
 </div>
 

@@ -40,22 +40,10 @@
         </div>
       </div>
 
-      <div class="chart-card">
-        <h3>Динамика среднего чека</h3>
-        <div class="chart-wrapper">
-          <canvas baseChart
-            [type]="'line'"
-            [data]="averageCheckData"
-            [options]="chartOptions">
-          </canvas>
-        </div>
-      </div>
-    </div>
-
     <div class="chart-row">
-      <div class="chart-card full-width">
+      <div class="chart-card extra-wide">
         <h3>Распределение платежей по размеру</h3>
-        <div class="chart-wrapper">
+        <div class="chart-wrapper large-chart">
           <canvas baseChart
             [type]="'bar'"
             [data]="paymentDistributionData"
@@ -94,16 +82,21 @@
     </div>
 
     <div class="chart-row">
-      <div class="chart-card full-width">
-        <h3>Динамика спроса на услуги</h3>
-        <div class="chart-wrapper">
-          <canvas baseChart
-            [type]="'line'"
-            [data]="demandDynamicsData"
-            [options]="chartOptions">
-          </canvas>
-        </div>
-      </div>
+  <div class="chart-card full-width">
+    <h3>Динамика спроса на услуги</h3>
+    <div class="chart-wrapper large-chart">
+      <canvas baseChart
+        [type]="'line'"
+        [data]="demandDynamicsData"
+        [options]="lineChartOptions">
+      </canvas>
     </div>
+    <div class="chart-legend">
+      <p>Наведите курсор на график для просмотра деталей</p>
+      <p>Двойной клик по услуге в легенде скроет/покажет её на графике</p>
+    </div>
+  </div>
+</div>
+
   </div>
 </div>

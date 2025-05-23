@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../../../entities/admins/model/api/admin.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Admin } from '../../../entities/admins/model/types/admin';
 
 @Component({
@@ -51,8 +51,12 @@ export class AdminsComponent {
     }
   }
 
-  resetForm() {
+  resetForm(form?: NgForm) {
     this.editingAdmin = null;
     this.form = {};
+
+    if (form) {
+      form.resetForm();
+    }
   }
 }

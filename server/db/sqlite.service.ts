@@ -10,7 +10,6 @@ export async function initializeDatabase(): Promise<Database> {
     filename: './fitness.db',
     driver: sqlite3.Database
   });
-//   registration_date TEXT DEFAULT (datetime('now'))
   await db.exec(`
 
   CREATE TABLE IF NOT EXISTS admins (

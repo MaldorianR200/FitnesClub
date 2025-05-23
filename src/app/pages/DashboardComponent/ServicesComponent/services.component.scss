@@ -74,6 +74,36 @@ input.invalid {
   box-shadow: 0 0 3px red;
 }
 
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+
+  label {
+    font-weight: 600;
+    color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+
+    input[type="text"] {
+      margin-top: 6px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+
+      &:focus {
+        outline: none;
+        border-color: #2ecc71;
+        box-shadow: 0 0 4px #2ecc71;
+      }
+    }
+  }
+}
+
 h2 {
   color: #2c3e50;
   margin-bottom: 15px;

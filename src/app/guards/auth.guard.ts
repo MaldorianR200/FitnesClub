@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../auth/auth.service'; // или ваш сервис для авторизации
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +16,9 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
     console.log('isAuthenticated', this.authService.isAuthenticated());
     if (this.authService.isAuthenticated()) {
-      return true; // если пользователь авторизован, разрешаем доступ
+      return true; 
     } else {
 
-      // если не авторизован, перенаправляем на страницу логина
       this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
       return false;
     }

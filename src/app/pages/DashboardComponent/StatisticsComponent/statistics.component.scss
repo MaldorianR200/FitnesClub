@@ -1,6 +1,6 @@
 .statistics-container {
   padding: 20px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 
   h1, h2, h3 {
@@ -47,9 +47,39 @@
     }
   }
 
+  .chart-card {
+  &.full-width {
+    max-width: 100%;
+    margin: 20px 0;
+
+    .large-chart {
+      height: 500px; // Увеличиваем высоту
+      width: 100%;
+      min-height: 400px;
+    }
+
+    .chart-legend {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+      p {
+        margin: 5px 0;
+      }
+    }
+  }
+}
+
   .chart-wrapper {
     position: relative;
     height: 300px;
     width: 100%;
+
+    &.large-chart {
+      height: 400px;  // Увеличиваем высоту для большой диаграммы
+      width: 500px;
+    }
   }
+
+
 }

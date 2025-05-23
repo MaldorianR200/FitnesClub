@@ -20,7 +20,6 @@ export class StatisticsComponent implements OnInit {
   monthlyRevenueData: any = {};
   weeklyRevenueData: any = {};
   serviceRevenueData: any = {};
-  averageCheckData: any = {};
   paymentDistributionData: any = {};
 
   // Статистика по услугам
@@ -35,12 +34,52 @@ export class StatisticsComponent implements OnInit {
   // Настройки для диаграмм
   chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       y: {
         beginAtZero: true
       }
     }
   };
+
+  lineChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      tooltip: {
+        mode: 'index' as const, // Явно указываем тип
+        intersect: false,
+      },
+      legend: {
+        position: 'top' as const,
+        labels: {
+          font: {
+            size: 12
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Количество продаж'
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Месяц/Год'
+        }
+      }
+    },
+    interaction: {
+      intersect: false,
+      mode: 'nearest' as const // Явно указываем тип
+    }
+  };
+
 
   constructor(
     private paymentService: PaymentService,
@@ -81,7 +120,6 @@ export class StatisticsComponent implements OnInit {
     this.prepareMonthlyRevenueData();
     this.prepareWeeklyRevenueData();
     this.prepareServiceRevenueData();
-    this.prepareAverageCheckData();
     this.preparePaymentDistributionData();
     this.preparePopularServicesData();
     this.prepareServicesRatioData();
@@ -170,37 +208,6 @@ export class StatisticsComponent implements OnInit {
     };
   }
 
-  prepareAverageCheckData(): void {
-    const monthlyAverage = this.payments.reduce((acc, payment) => {
-      const date = this.getVisitDate(payment);
-      const monthYear = `${date.getMonth()+1}/${date.getFullYear()}`;
-
-      if (!acc[monthYear]) {
-        acc[monthYear] = { sum: 0, count: 0 };
-      }
-      acc[monthYear].sum += payment.final_price;
-      acc[monthYear].count += 1;
-
-      return acc;
-    }, {} as Record<string, { sum: number; count: number }>);
-
-    const labels = Object.keys(monthlyAverage);
-    const data = labels.map(month =>
-      (monthlyAverage[month].sum / monthlyAverage[month].count).toFixed(2)
-    );
-
-    this.averageCheckData = {
-      labels: labels,
-      datasets: [{
-        label: 'Средний чек по месяцам',
-        data: data,
-        backgroundColor: 'rgba(153, 102, 255, 0.7)',
-        borderColor: 'rgba(153, 102, 255, 1)',
-        borderWidth: 1,
-        tension: 0.4
-      }]
-    };
-  }
 
   preparePaymentDistributionData(): void {
     const paymentRanges = {
@@ -263,6 +270,15 @@ export class StatisticsComponent implements OnInit {
     };
   }
 
+
+
+// Добавляем вспомогательный метод для получения названия месяца
+private getMonthName(monthIndex: number): string {
+  const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+  return months[monthIndex];
+}
+
   prepareServicesRatioData(): void {
     const serviceCounts = this.payments.reduce((acc, payment) => {
       const service = this.services.find(s => s.id === payment.service_id);
@@ -288,45 +304,69 @@ export class StatisticsComponent implements OnInit {
     };
   }
 
-  prepareDemandDynamicsData(): void {
-    const monthlyServiceDemand = this.services.reduce((acc, service) => {
-      acc[service.title] = this.payments.reduce((monthly, payment) => {
-        if (payment.service_id === service.id) {
-          const date = this.getVisitDate(payment);
-          const monthYear = `${date.getMonth()+1}/${date.getFullYear()}`;
-
-          if (!monthly[monthYear]) {
-            monthly[monthYear] = 0;
-          }
-          monthly[monthYear] += payment.quantity;
-        }
-        return monthly;
-      }, {} as Record<string, number>);
-      return acc;
-    }, {} as Record<string, Record<string, number>>);
-
-    const allMonths = Array.from(new Set(
-      this.payments.map(payment => {
+ // Обновляем метод подготовки данных
+prepareDemandDynamicsData(): void {
+  const monthlyServiceDemand = this.services.reduce((acc, service) => {
+    acc[service.title] = this.payments.reduce((monthly, payment) => {
+      if (payment.service_id === service.id) {
         const date = this.getVisitDate(payment);
-        return `${date.getMonth()+1}/${date.getFullYear()}`;
-      })
-    )).sort();
+        const monthYear = `${this.getMonthName(date.getMonth())} ${date.getFullYear()}`;
 
-    const datasets = Object.entries(monthlyServiceDemand).map(([service, data]) => {
-      return {
-        label: service,
-        data: allMonths.map(month => data[month] || 0),
-        borderColor: this.getRandomColor(Object.keys(monthlyServiceDemand).indexOf(service)),
-        tension: 0.1,
-        fill: false
-      };
-    });
+        if (!monthly[monthYear]) {
+          monthly[monthYear] = 0;
+        }
+        monthly[monthYear] += payment.quantity;
+      }
+      return monthly;
+    }, {} as Record<string, number>);
+    return acc;
+  }, {} as Record<string, Record<string, number>>);
 
-    this.demandDynamicsData = {
-      labels: allMonths,
-      datasets: datasets
+  const allMonths = Array.from(new Set(
+    this.payments.map(payment => {
+      const date = this.getVisitDate(payment);
+      return `${this.getMonthName(date.getMonth())} ${date.getFullYear()}`;
+    })
+  )).sort((a, b) => {
+    // Сортируем месяцы в хронологическом порядке
+    const [monthA, yearA] = a.split(' ');
+    const [monthB, yearB] = b.split(' ');
+    const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                   'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+    if (yearA !== yearB) return +yearA - +yearB;
+    return months.indexOf(monthA) - months.indexOf(monthB);
+  });
+
+  // Ограничиваем количество линий для лучшей читаемости
+  const topServices = Object.entries(monthlyServiceDemand)
+    .sort((a, b) => {
+      const totalA = Object.values(a[1]).reduce((sum, val) => sum + val, 0);
+      const totalB = Object.values(b[1]).reduce((sum, val) => sum + val, 0);
+      return totalB - totalA;
+    })
+    .slice(0, 8); // Показываем только топ-8 услуг
+
+  const datasets = topServices.map(([service, data]) => {
+    return {
+      label: service,
+      data: allMonths.map(month => data[month] || 0),
+      borderColor: this.getRandomColor(topServices.findIndex(s => s[0] === service)),
+      backgroundColor: 'rgba(0,0,0,0)',
+      tension: 0.3,
+      fill: false,
+      pointBackgroundColor: '#fff',
+      pointBorderWidth: 2,
+      pointHoverRadius: 5,
+      pointHoverBorderWidth: 2
     };
-  }
+  });
+
+  this.demandDynamicsData = {
+    labels: allMonths,
+    datasets: datasets
+  };
+}
 
   // Вспомогательные методы
   private getWeekNumber(date: Date): number {

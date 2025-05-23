@@ -40,7 +40,7 @@
     <div class="error" *ngIf="position.invalid && position.touched">Должность обязательна</div>
   </label>
 
-  <button type="submit" [disabled]="f.invalid">
+  <button type="submit" (click)="resetForm(f)" [disabled]="f.invalid">
     {{ editingManagers ? 'Обновить' : 'Добавить' }}
   </button>
   <button type="button" (click)="resetForm()" *ngIf="editingManagers">Отмена</button>

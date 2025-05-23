@@ -21,7 +21,7 @@ canActivate(route: ActivatedRouteSnapshot): boolean {
     const userRole = this.authService.getUserRole();
 
     if (!requiredRoles || requiredRoles.length === 0) {
-      return true; // Если роли не указаны, доступ разрешён
+      return true; 
     }
 
     if (!userRole || !requiredRoles.includes(userRole)) {
