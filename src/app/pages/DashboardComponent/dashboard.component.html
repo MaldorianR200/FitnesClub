@@ -26,6 +26,9 @@
     <li *ngIf="authService.hasRole(Role.ADMIN) || authService.hasRole(Role.MANAGER)">
       <a routerLink="payments" routerLinkActive="active">Оплата</a>
     </li>
+     <li *ngIf="authService.hasRole(Role.ADMIN) || authService.hasRole(Role.MANAGER)">
+      <a routerLink="statistics" routerLinkActive="active">Статистика</a>
+    </li>
 
     <li class="logout" *ngIf="authService.isAuthenticated()">
       <div class="user-info">

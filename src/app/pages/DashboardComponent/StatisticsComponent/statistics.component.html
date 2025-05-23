@@ -1,0 +1,109 @@
+<div class="statistics-container">
+  <h1>Статистика</h1>
+
+  <div class="statistics-section">
+    <h2>Финансовая статистика</h2>
+
+    <div class="chart-row">
+      <div class="chart-card">
+        <h3>Общая выручка по месяцам</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+            [type]="'bar'"
+            [data]="monthlyRevenueData"
+            [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Общая выручка по неделям</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+            [type]="'bar'"
+            [data]="weeklyRevenueData"
+            [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-row">
+      <div class="chart-card">
+        <h3>Доход по категориям услуг</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+            [type]="'doughnut'"
+            [data]="serviceRevenueData"
+            [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Динамика среднего чека</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+            [type]="'line'"
+            [data]="averageCheckData"
+            [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-row">
+      <div class="chart-card full-width">
+        <h3>Распределение платежей по размеру</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+            [type]="'bar'"
+            [data]="paymentDistributionData"
+            [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="statistics-section">
+    <h2>Статистика по услугам</h2>
+
+    <div class="chart-row">
+      <div class="chart-card">
+        <h3>Топ самых популярных услуг</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+            [type]="'bar'"
+            [data]="popularServicesData"
+            [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3>Соотношение продаж услуг</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+            [type]="'pie'"
+            [data]="servicesRatioData"
+            [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-row">
+      <div class="chart-card full-width">
+        <h3>Динамика спроса на услуги</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+            [type]="'line'"
+            [data]="demandDynamicsData"
+            [options]="chartOptions">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

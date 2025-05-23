@@ -5,7 +5,7 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'login', renderMode: RenderMode.Prerender },
   { path: 'register', renderMode: RenderMode.Prerender },
 
-  // --- Основные панели ---
+  // --- Основные страницы ---
   { path: 'dashboard', renderMode: RenderMode.Prerender },
   { path: 'dashboard/home', renderMode: RenderMode.Prerender },
   { path: 'dashboard/admins', renderMode: RenderMode.Prerender },
@@ -13,6 +13,7 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'dashboard/trainers', renderMode: RenderMode.Prerender },
   { path: 'dashboard/services', renderMode: RenderMode.Prerender },
   { path: 'dashboard/visits', renderMode: RenderMode.Prerender },
+  { path: 'dashboard/statistics', renderMode: RenderMode.Prerender},
 
 
 
